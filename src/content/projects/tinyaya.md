@@ -1,19 +1,19 @@
 ---
-title: TinyAya — Language AI for Underrepresented Languages
-date: 2026-07-31
+title: TinyAya — Language AI for Nigerian Languages
+date: 2024-01-29
 category: Language AI
-summary: High-performance transliteration and speech models for Arabic diacritization and Nigerian languages (Yoruba, Hausa, Igbo, Pidgin), benchmarked with DSPy.
-methods: [transliteration, LoRA fine-tuning, Gemma, ASR, DSPy evaluation, Yoruba G2P]
-github: https://github.com/olanigan/transliterate
-huggingface: https://hf.co/olanigan/gemma-3-4b-transliterate
-impact: Brings production-quality language tooling to languages that mainstream model providers underserve, with reproducible datasets and DSPy-benchmarked evaluation rather than one-off demos.
+summary: Speech recognition and diacritization tooling for Yoruba, part of a broader initiative to build language AI for underrepresented Nigerian languages (Yoruba, Hausa, Igbo, Pidgin).
+methods: [ASR, wav2vec2-bert, fine-tuning, diacritization, TTS]
+github: https://github.com/olanigan/yoruba_asr
+huggingface: https://hf.co/olanigan/w2v-bert-yoruba-CV16
+impact: Targets languages mainstream speech and language model providers underserve, starting with a working Yoruba ASR model rather than a research proposal.
 selected: true
 ---
 
-TinyAya is the umbrella for Ibrahim's work on language AI for underrepresented languages — most actively Arabic transliteration/diacritization and Yoruba speech recognition, with Hausa, Igbo, and Pidgin planned.
+TinyAya is Ibrahim's initiative for language AI covering underrepresented Nigerian languages — Yoruba, Hausa, Igbo, and Pidgin — starting with Yoruba speech and diacritization tooling.
 
 ## Highlights
 
-- Two LoRA adapters shipped in July 2026: [`gemma-3-4b-transliterate`](https://hf.co/olanigan/gemma-3-4b-transliterate) and [`gemma-2-2b-transliterate`](https://hf.co/olanigan/gemma-2-2b-transliterate), trained on the [`gemma-4-good-dataset`](https://hf.co/datasets/olanigan/gemma-4-good-dataset).
-- A golden paired dataset, [`logical-transcripts`](https://hf.co/datasets/olanigan/logical-transcripts) (Aug 2026), built from a real recorded Islamic lecture to train Arabic-Latin-to-diacritized transliteration.
-- Evaluation throughout uses DSPy metrics rather than spot-checks, so quality claims are reproducible.
+- [`w2v-bert-yoruba-CV16`](https://hf.co/olanigan/w2v-bert-yoruba-CV16): a Yoruba automatic-speech-recognition model, fine-tuned from Meta's `facebook/w2v-bert-2.0` (a 605M-parameter wav2vec2-bert model) on Common Voice 16.0 Yoruba data.
+- A Yoruba diacritizer and a Yoruba text-to-speech demo (built on Facebook's MMS-TTS), both shipped as interactive Hugging Face Spaces.
+- Hausa, Igbo, and Pidgin coverage is the stated next step for the initiative.
