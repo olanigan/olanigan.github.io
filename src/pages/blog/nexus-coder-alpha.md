@@ -1,3 +1,12 @@
+---
+layout: ../../layouts/Layout.astro
+title: "Nexus Coder Alpha: We Built a \"Toddler-Sized\" AI with a Master's Degree in Code"
+pubDate: 2026-03-02
+description: "An experiment to see if a tiny AI, one-fiftieth the size of the giants, can be trained into a systematic, zero-hallucination coding agent."
+author: "Ibrahim Olanigan"
+tags: ["Agentic AI", "Model Training", "GRPO"]
+---
+
 # 🚀 Nexus Coder Alpha: We Built a "Toddler-Sized" AI with a Master’s Degree in Code
 
 **Date**: March 2, 2026  

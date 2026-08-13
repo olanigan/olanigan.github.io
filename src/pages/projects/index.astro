@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+	(a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<Layout>
+	<header class="mb-12 border-b pb-8">
+		<a href="/" class="text-blue-600 hover:underline text-sm">&larr; Back</a>
+		<h1 class="text-4xl font-bold text-gray-900 mt-4">Projects</h1>
+	</header>
+
+	<ul class="space-y-10">
+		{projects.map((project) => (
+			<li>
+				<a href={`/projects/${project.id}`} class="group block">
+					<span class="text-gray-400 text-sm mb-1 block">{project.data.category}</span>
+					<h2 class="text-2xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+						{project.data.title}
+					</h2>
+					<p class="mt-2 text-gray-600 leading-relaxed">{project.data.summary}</p>
+					<p class="mt-2 text-sm text-gray-500 flex flex-wrap gap-x-2">
+						{project.data.methods.map((method) => (
+							<span class="bg-gray-100 rounded px-2 py-0.5">{method}</span>
+						))}
+					</p>
+				</a>
+			</li>
+		))}
+	</ul>
+
+	<footer class="mt-20 pt-8 border-t text-gray-400 text-sm">
+		<p>&copy; 2026 Ibrahim Olanigan. Built with Astro and High-Efficiency principles.</p>
+	</footer>
+</Layout>

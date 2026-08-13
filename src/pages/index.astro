@@ -1,41 +1,78 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = Object.values(import.meta.glob('./blog/*.md', { eager: true }))
+	.map((post) => post as { url: string; frontmatter: { title: string; pubDate: string; description: string } })
+	.sort((a, b) => new Date(b.frontmatter.pubDate).getTime() - new Date(a.frontmatter.pubDate).getTime());
+
+const projects = (await getCollection('projects')).sort(
+	(a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const dateFormat: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
 ---
 
 <Layout>
-        <header class="mb-12 border-b pb-8">
-                <h1 class="text-4xl font-bold text-gray-900 mb-2">Ibrahim Olanigan</h1>
-                <p class="text-xl text-gray-600">High-Efficiency AI & Systems Engineer</p>
-                <div class="mt-4 flex gap-6 text-blue-600 font-medium">
-                        <a href="https://github.com/olanigan" target="_blank" class="hover:underline">GitHub</a>
-                        <a href="https://huggingface.co/olanigan" target="_blank" class="hover:underline">Hugging Face</a>
-                        <a href="https://linkedin.com/in/olanigan" target="_blank" class="hover:underline">LinkedIn</a>
-                </div>
-        </header>
+	<header class="mb-12 border-b pb-8">
+		<h1 class="text-4xl font-bold text-gray-900 mb-2">Ibrahim Olanigan</h1>
+		<p class="text-xl text-gray-600">AI Systems, Infrastructure & Enablement</p>
+		<div class="mt-4 flex gap-6 text-blue-600 font-medium">
+			<a href="https://github.com/olanigan" target="_blank" class="hover:underline">GitHub</a>
+			<a href="https://huggingface.co/olanigan" target="_blank" class="hover:underline">Hugging Face</a>
+			<a href="https://linkedin.com/in/olanigan" target="_blank" class="hover:underline">LinkedIn</a>
+		</div>
+	</header>
 
-        <section class="mb-16">
-                <h2 class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-6">Mission</h2>
-                <p class="text-xl text-gray-700 leading-relaxed italic">
-                        "Architecting autonomous workflows and governance-first AI systems that bridge the gap between model inference and engineering excellence."
-                </p>
-        </section>
+	<section class="mb-16">
+		<h2 class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-6">Mission</h2>
+		<p class="text-xl text-gray-700 leading-relaxed italic">
+			"Architecting the enablement layer for AI-assisted work — structured, traceable tooling for coding agents, local-first infrastructure for running and serving models, and applied systems built on small, efficient models."
+		</p>
+	</section>
 
-        <section class="mb-12">
-                <h2 class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-6">Latest Writing</h2>
-                <ul class="space-y-8">
-                        <li>
-                                <a href="/blog/onecoder-governance" class="group block">
-                                        <span class="text-gray-400 text-sm mb-1 block">Feb 24, 2026</span>
-                                        <h3 class="text-2xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">The Governance Bottleneck: Introducing OneCoder CLI</h3>
-                                        <p class="mt-2 text-gray-600 leading-relaxed">
-                                                Why the next phase of AI development isn't about coding faster—it's about coding with atomic traceability.
-                                        </p>
-                                </a>
-                        </li>
-                </ul>
-        </section>
+	<section class="mb-16">
+		<div class="flex items-baseline justify-between mb-6">
+			<h2 class="text-xs uppercase tracking-widest font-bold text-gray-400">Latest Writing</h2>
+		</div>
+		<ul class="space-y-8">
+			{posts.map((post) => (
+				<li>
+					<a href={post.url} class="group block">
+						<span class="text-gray-400 text-sm mb-1 block">
+							{new Date(post.frontmatter.pubDate).toLocaleDateString('en-US', dateFormat)}
+						</span>
+						<h3 class="text-2xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+							{post.frontmatter.title}
+						</h3>
+						<p class="mt-2 text-gray-600 leading-relaxed">{post.frontmatter.description}</p>
+					</a>
+				</li>
+			))}
+		</ul>
+	</section>
 
-        <footer class="mt-20 pt-8 border-t text-gray-400 text-sm">
-                <p>&copy; 2026 Ibrahim Olanigan. Built with Astro and High-Efficiency principles.</p>
-        </footer>
+	<section class="mb-12">
+		<div class="flex items-baseline justify-between mb-6">
+			<h2 class="text-xs uppercase tracking-widest font-bold text-gray-400">Projects</h2>
+			<a href="/projects" class="text-sm text-blue-600 hover:underline">View all &rarr;</a>
+		</div>
+		<ul class="space-y-6">
+			{projects.slice(0, 4).map((project) => (
+				<li>
+					<a href={`/projects/${project.id}`} class="group block">
+						<span class="text-gray-400 text-sm mb-1 block">{project.data.category}</span>
+						<h3 class="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+							{project.data.title}
+						</h3>
+						<p class="mt-1 text-gray-600 leading-relaxed">{project.data.summary}</p>
+					</a>
+				</li>
+			))}
+		</ul>
+	</section>
+
+	<footer class="mt-20 pt-8 border-t text-gray-400 text-sm">
+		<p>&copy; 2026 Ibrahim Olanigan. Built with Astro and High-Efficiency principles.</p>
+	</footer>
 </Layout>
